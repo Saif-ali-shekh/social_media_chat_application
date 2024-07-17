@@ -1,0 +1,472 @@
+
+{% include 'header.html'%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+            text-align: center;
+            padding: 50px;
+            margin: 100px;
+        }
+        h1{
+            color: black;
+        }
+
+     .container1 {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+        }
+
+  
+        .form-group1 {
+            margin-bottom: 15px;
+
+        }
+
+        .form-group1 input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 5px;
+
+        }
+        input::placeholder {
+            font-size: 14px; /* Set the desired font size */
+        }
+      
+  
+
+        .icon {
+            margin: auto;
+            margin-left: 10px;
+        }
+
+
+
+
+
+        .form-control1 small {
+
+            position: absolute;
+            text-align: left;
+
+            top: 60px;
+            left: 0;
+        }
+
+        .formgroupinput1 {
+
+            display: flex;
+        }
+
+        .form-group1 small {
+            display: flex;
+            color: red;
+
+
+        }
+        .get-started-btn{
+            border: none;
+        }
+        .success{
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    
+
+    <div class="container1">
+        <h1 class="logo me-auto" >Register</h1>
+
+        <form id="form" method="post" onsubmit=" return validateForm()">
+            {% csrf_token %}
+
+
+
+            <div class="form-group1">
+                <div class="formgroupinput1">
+                    <input type="text" id="first_name" placeholder="Enter your First Name" name="first_name" onkeyup="firstName()" />
+                    <div class="icon" id="firsticon">
+                        <!-- <i class="success fa-solid fa-circle-check"></i>
+                            <i class="fa-solid fa-circle-exclamation"></i> -->
+                    </div>
+                </div>
+                <small id="nameError"></small>
+            </div>
+
+            <div class="form-group1">
+                <div class="formgroupinput1">
+                    <input type="text" id="last_name" placeholder="Enter your Last Name" name="last_name" onkeyup="lastName()" />
+                    <div class="icon" id="icon1">
+                        <!-- <i class="success fa-solid fa-circle-check"></i>
+                            <i class="fa-solid fa-circle-exclamation"></i> -->
+                    </div>
+                </div>
+                <small id="nameError1"></small>
+            </div>
+
+            <div class="form-group1">
+                <div class="formgroupinput1">
+                    <input type="text" id="username" type="text" placeholder="Enter your Username" name="username" onkeyup="userName()"/>
+                    <div class="icon" id="usernameicon">
+                        <!-- <i class="success fa-solid fa-circle-check"></i>
+                            <i class="fa-solid fa-circle-exclamation"></i> -->
+                    </div>
+                </div>
+               
+                <small id="usernameError">{% if username_error %}
+                    {{ username_error }}
+                {% endif %} </small>
+                
+            </div>
+
+
+            <div class="form-group1">
+                <div class="formgroupinput1">
+                    <input type="text" id="email" type="email" placeholder="Email Address" name="email" onkeyup="Email()" />
+                    <div class="icon" id="emailicon">
+                        <!-- <i class="success fa-solid fa-circle-check"></i>
+                            <i class="fa-solid fa-circle-exclamation"></i> -->
+                    </div>
+                </div>
+                <small id="emailError"> {% if emailexist %} {{emailexist}}{% endif %} </small>
+                
+            </div>
+
+            
+            <div class="form-group1">
+                <div class="formgroupinput1">
+                    <input type="password" id="password" type="password" placeholder="password" name="password" onkeyup="Password()" />
+                    <div class="icon" id="passicon">
+                        <!-- <i class="success fa-solid fa-circle-check"></i>
+                            <i class="fa-solid fa-circle-exclamation"></i> -->
+                    </div>
+                </div>
+                <small id="passwordError"></small>
+            </div>
+
+             
+            <div class="form-group1">
+                <div class="formgroupinput1">
+                    <input type="password" id="cpassword" type="password" placeholder="Confirm password" name="pass2" onkeyup="CPassword()" />
+                    <div class="icon" id="cpassicon"></div>
+                </div>
+                <small id="cpasswordError"></small>
+            </div>
+
+            <button type="submit" class="submit-btn get-started-btn scrollto" onckick="validateForm()" >Register</button>
+        </form>
+    </div>
+    <div class="success" id="success_form"></div>
+
+</body>
+
+<script>
+   
+
+
+    function firstName() {
+        const nameError = document.getElementById('nameError');
+        firsticon = document.getElementById('firsticon');
+        let name = document.getElementById('first_name').value;
+
+
+
+        if (name.length == 0) {
+            nameError.innerHTML = "Please Enter Your First Name";
+            nameError.style.color = 'red';
+            firsticon.innerHTML = '';
+
+            return false;
+        }
+        if (!name[0].match(/^[A-Z]+$/)) {
+            nameError.innerHTML = "First letter must be capital";
+            nameError.style.color = 'red';
+            firsticon.innerHTML = '';
+            return false;
+        }
+        if (name.match(/\d/)) {
+            nameError.innerHTML = "First Name cannot contain numbers";
+            nameError.style.color = 'red';
+            firsticon.innerHTML = '';
+            return false;
+        }
+        if (name.match(/[^\w\s]/)) {
+            nameError.innerHTML = "First Name cannot contain special characters";
+            nameError.style.color = 'red';
+            firsticon.innerHTML = '';
+            return false;
+        }
+        name = name.toLowerCase();
+        if (name.match(/(\w)\1\1/)) {
+
+            nameError.innerHTML = "Name contains 3 or more consecutive identical characters.";
+            nameError.style.color = 'red';
+            firsticon.innerHTML = '';
+            return false;
+        }
+
+        if (name.length < 3 || name.length > 20) {
+            nameError.innerHTML = "First Name must be 2 to 20 letter";
+            nameError.style.color = 'red';
+            firsticon.innerHTML = '';
+            return false;
+        }
+
+
+        nameError.innerHTML = "";
+        nameError.style.color = 'green';
+        firsticon.style.color = 'green';
+        firsticon.innerHTML = '<i class="success fa-solid fa-circle-check"></i>';
+
+        return true;
+    }
+
+    function lastName() {
+        const nameError = document.getElementById('nameError1');
+        const icon1 = document.getElementById('icon1');
+        let name = document.getElementById('last_name').value;
+
+
+
+        if (name.length == 0) {
+            nameError.innerHTML = "Please Enter Your Last Name";
+            nameError.style.color = 'red';
+            icon1.innerHTML = '';
+
+
+            return false;
+        }
+        if (!name[0].match(/^[A-Z]+$/)) {
+            nameError.innerHTML = "First letter must be capital";
+            nameError.style.color = 'red';
+            icon.innerHTML = '';
+            return false;
+        }
+        if (name.match(/\d/)) {
+            nameError.innerHTML = "Last Name cannot contain numbers";
+            nameError.style.color = 'red';
+            icon1.innerHTML = '';
+            return false;
+        }
+        if (name.match(/[^\w\s]/)) {
+            nameError.innerHTML = "Last Name cannot contain special characters";
+            nameError.style.color = 'red';
+            icon1.innerHTML = '';
+            return false;
+        }
+        name = name.toLowerCase();
+        if (name.match(/(\w)\1\1/)) {
+
+            nameError.innerHTML = "Name contains 3 or more consecutive identical characters.";
+            nameError.style.color = 'red';
+            icon1.innerHTML = '';
+            return false;
+        }
+
+        if (name.length < 3 || name.length > 20) {
+            nameError.innerHTML = "Last Name must be 2 to 20 letter";
+            nameError.style.color = 'red';
+            icon1.innerHTML = '';
+            return false;
+        }
+
+
+        nameError.innerHTML = "";
+        nameError.style.color = 'green';
+        icon1.style.color = 'green';
+        icon1.innerHTML = '<i class="success fa-solid fa-circle-check"></i>';
+
+        return true;
+    }
+ 
+    function userName(){
+        const nameError = document.getElementById('usernameError');
+        const iconuser = document.getElementById('usernameicon');
+        let name = document.getElementById('username').value;
+        
+
+
+
+        if (name.length == 0) {
+            nameError.innerHTML = "Please Make Your Username";
+            nameError.style.color = 'red';
+            iconuser.innerHTML = '';
+
+            return false;
+        }
+        if (name[0].match(/\d/)) {
+            nameError.innerHTML = "UserName cannot contain firstletter numbers";
+            nameError.style.color = 'red';
+            iconuser.innerHTML = '';
+            return false;
+        }
+        
+        if (!name.match(/^[a-zA-Z0-9_]+$/)) {
+            nameError.innerHTML = "username can not containe special Symbol";
+            nameError.style.color = 'red';
+            iconuser.innerHTML = '';
+            return false;
+        }
+        if (name.toLowerCase() =='root' || name.toLowerCase() =='admin') {
+            nameError.innerHTML = "UserName cannot contain Reserved word";
+            nameError.style.color = 'red';
+            iconuser.innerHTML = '';
+            return false;
+        }
+
+        nameError.innerHTML = "";
+        nameError.style.color = 'green';
+        iconuser.style.color = 'green';
+        iconuser.innerHTML = '<i class="success fa-solid fa-circle-check"></i>';
+
+        return true
+       
+    }
+    function Email() {
+        const emailError = document.getElementById('emailError');
+        let email = document.getElementById('email').value;
+        const emailicon = document.getElementById('emailicon');
+
+        if (email.length == 0) {
+            emailError.innerHTML = "Email cannot be blank";
+            emailError.style.color = 'red';
+            emailicon.innerHTML = '';
+
+
+            return false;
+        }
+        if (email.match(/^[\s]/)) {
+            emailError.innerHTML = "Remove White Space";
+            emailError.style.color = 'red';
+            emailicon.innerHTML = '';
+
+
+            return false;
+        }
+        if (!email.match(/^\w+([\.-]?\w+)*@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.){1,2}[a-zA-Z]{2,3}))$/)) {
+            emailError.innerHTML = "Invalid Email";
+            emailError.style.color = 'red';
+            emailicon.innerHTML = '';
+
+
+            return false;
+        }
+
+        emailError.innerHTML = "";
+        emailicon.style.color = 'green';
+        emailicon.innerHTML = '<i class="success fa-solid fa-circle-check"></i>';
+
+
+        return true;
+    }
+
+
+    function Password(){
+        const passwordError= document.getElementById('passwordError');
+        let  password = document.getElementById('password').value;
+        const passicon = document.getElementById('passicon');
+
+
+        if(password.length == 0){
+            passwordError.innerHTML = "Password cannot be blank";
+            passwordError.style.color = 'red';
+            passicon.innerHTML = '';
+            return false;
+        }
+        if(password.includes(" ")){
+          passwordError.innerHTML = "Password Cannot Contain White Space";
+          passwordError.style.color = 'red';
+            passicon.innerHTML = '';
+          return false;
+        }
+        if(password.length<8 || password.length>16){
+            passwordError.innerHTML = "Password Must be 8 to 16 characters";
+            passwordError.style.color = 'red';
+            passicon.innerHTML = '';
+            return false;
+        }
+    
+        if(!password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$!%*?&])[A-Za-z\d@#$!%*?&]{8,16}$/)){
+    
+          passwordError.innerHTML = "Password must contain: One special character(@#$!%*?&), One capital letter, One small letter and One number(0-9)";
+          passwordError.style.color = 'red';
+            passicon.innerHTML = '';
+          return false;
+        }
+        passwordError.innerHTML = '';
+        passicon.style.color = 'green';
+        passicon.innerHTML = '<i class="success fa-solid fa-circle-check"></i>';
+        return true;
+    }
+
+    function CPassword(){
+        const passwordError= document.getElementById('cpasswordError');
+        let  cpassword = document.getElementById('cpassword').value;
+        const cpassicon = document.getElementById('cpassicon');
+
+    
+        if(cpassword.length == 0){
+            passwordError.innerHTML = "Confirm Password cannot be blank";
+            passwordError.style.color = 'red';
+            cpassicon.innerHTML = '';
+            return false;
+        }
+        if(cpassword!=(document.getElementById('password').value)){
+            passwordError.innerHTML = "Password and Confirm Password must be same";
+            passwordError.style.color = 'red';
+            cpassicon.innerHTML = '';
+            return false;
+        }
+        passwordError.innerHTML = "";
+        cpassicon.innerHTML = '<i class="success fa-solid fa-circle-check"></i>';
+        cpassicon.style.color = 'green';
+        return true;
+    }
+    
+
+
+
+
+    function validateForm(){
+
+        if(firstName() && lastName() && Email() && Password() && CPassword()){
+            console.log(firstName());
+            console.log(lastName());
+            console.log(Email());
+            console.log(Password());
+            console.log(CPassword());
+            const success = document.getElementById('success_form');
+            success.style.color = 'green';
+            success.innerHTML ="Successfull"
+            
+            return true
+        }
+        
+    
+            return false
+
+    }
+
+
+</script>
+
+</html>

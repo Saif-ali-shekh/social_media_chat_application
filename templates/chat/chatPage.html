@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Chat Application</title>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element"></script>
+		<style>  
+	
+    body{
+
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .chat-box {
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .message {
+      margin-bottom: 15px;
+    }
+
+    .message.sent {
+      text-align: right;
+    }
+
+    .message.received {
+      text-align: left;
+    }
+    .input-container {
+      display: flex;
+      margin-top: 10%;
+
+    }
+
+    #id_message_send_input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-right: 10px;
+      
+    }
+
+    #id_message_send_button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #4caf50;
+      color: white;
+      cursor: pointer;
+    }
+
+    .logout-link {
+      margin-top: 20px;
+      display: block;
+      text-align: center;
+      color: #4caf50;
+    }
+    .msg_error{
+      color: red;
+      width: 100%;
+      margin-left: 35%;
+    }
+  </style>
+</head>
+<body>
+
+	{% include 'header.html' %} 
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+
+  <div class="container">
+    <div class="header">
+      <h1>Hello, Welcome to Artistry chat site! {{request.user}}</h1> <!-- request.user ==supersuder -->
+    </div>
+    
+    <div class="chat-box" id="id_chat_item_container"></div>
+    <div class="input-container">
+      <input type="text" id="id_message_send_input" placeholder="Type your message...">
+      <button type="submit" id="id_message_send_button">Send Message</button> 
+    </div>
+    <small class="msg_error" id="msg_error"></small>
+  </div>
+
+
+  <script>
+	// Your existing WebSocket setup code
+	const chatSocket = new WebSocket("ws://" + window.location.host + "/");
+	chatSocket.onopen = function (e) {
+	  console.log("The connection was set up successfully!");
+	};
+	chatSocket.onclose = function (e) {
+	  console.log("Something unexpected happened!");
+	};
+	
+	document.querySelector("#id_message_send_input").focus();
+	document.querySelector("#id_message_send_input").onkeyup = function (e) {
+	  if (e.keyCode == 13) {
+		document.querySelector("#id_message_send_button").click();
+	  }
+	};
+  
+	document.querySelector("#id_message_send_button").onclick = function (e) {
+	  var messageInput = document.querySelector("#id_message_send_input").value;
+    if(messageInput.trim()=='')
+    {
+      msg_error=document.getElementById('msg_error')
+      msg_error.innerHTML='Message is empty!'
+      return false
+    }
+    msg_error.innerHTML=''
+
+	  chatSocket.send(JSON.stringify({ message: messageInput, username: "{{request.user.username}}" }));
+	  document.querySelector("#id_message_send_input").value = "";
+	};
+  
+	chatSocket.onmessage = function (e) {
+	  const data = JSON.parse(e.data);
+	  var messageDiv = document.createElement("div");
+	  messageDiv.className = "message";
+	  
+	  if (data.username === "{{request.user.username}}") {
+		messageDiv.classList.add("sent");
+		messageDiv.innerHTML = data.message + " : " + data.username;
+	  } else {
+		messageDiv.classList.add("received");
+		messageDiv.innerHTML = data.username + " : " + data.message;
+	  }
+  
+	  document.querySelector("#id_chat_item_container").appendChild(messageDiv);
+
+	  document.querySelector("#id_chat_item_container").scrollTop = document.querySelector("#id_chat_item_container").scrollHeight;
+	};
+  </script>
+  
+  
+</body>
+</html>

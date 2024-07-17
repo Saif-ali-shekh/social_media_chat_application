@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generated Image</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container1 {
+            text-align: center;
+            padding: 40px;
+            margin-top: 30px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form1 {
+            margin-top: 20px;
+        }
+
+        label {
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        input1[type="text"] {
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .gen_img{
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .gen_img:hover {
+            background-color: #45a049;
+        }
+
+        img {
+            margin-top: 20px;
+            max-width: 100%;
+            height: auto;
+        }
+
+        p1 {
+            margin-top: 20px;
+            color: #888;
+        }
+        .card1 img {
+            margin-top: 20px;
+            max-width: 100%;
+            height: auto;
+            border: 2px solid rgb(204, 199, 199);
+            padding: 10px;
+            box-shadow: 10px 10px rgb(204, 199, 199);
+        
+        }
+
+        .no-image-message1 {
+            margin-top: 20px;
+            color: #888;
+        }
+        .small_error_img{
+            color: red;
+            
+        }
+    </style>
+</head>
+
+<body>
+    {% include 'header.html' %}
+    <div class="container1">
+        <h1>Generated Image:</h1>
+
+        <form  method="post" id="myform" onsubmit=" return Check_Input1()">
+            {% csrf_token %} <!-- Include CSRF token here -->
+            <label for="prompt">Enter Prompt:</label>
+            <input type="text" id="prompt" name="prompt" required >
+            <!-- <button type="submit" class="gen_img" id="gen_img">Generate Image</button> -->
+            <button type="submit" class="gen_img" id="gen_img" >Generate Image</button>
+        </form>
+        <small class="small_error_img" id="small_error_img"></small>
+
+        <div class="card1">
+            {% if generated_image_path %}
+            <img src="{{ generated_image_path }}" alt="Generated Image">
+            {% else %}
+            <div class="no-image-message1">No image generated yet. Enter a prompt and click 'Generate Image'.</div>
+            {% endif %}
+        </div>
+    </div>
+    <script>
+        function Check_Input1(){
+            prompt_text=document.getElementById('prompt').value
+            small_error_img=document.getElementById('small_error_img')
+            if (prompt_text.trim() == '') {
+                small_error_img.innerHTML = "Please Enter any Text";
+                small_error_img.style.color = 'red';
+    
+    
+                return false;
+            }
+          
+            small_error_img.innerHTML = "Please Wait!";
+            small_error_img.style.color = 'green';
+            firsticon.style.color = 'green';
+            return true;
+        }
+    </script>
+</body>
+
+
+
+</html>

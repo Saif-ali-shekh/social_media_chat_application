@@ -1,0 +1,190 @@
+{% include 'header.html' %} 
+
+<style>
+    
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f1f1f1;
+        text-align: center;
+        margin: 200px;
+        padding: 50px;
+    }
+  
+    .container1 {
+        max-width: 400px;
+        min-width: 200px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    }
+
+    .container1 h2 {
+        color: #333;
+    }
+
+    .form-group1 {
+        margin-bottom: 15px;
+
+    }
+
+    .form-group1 input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 5px;
+
+    }
+
+  
+
+    .icon1 {
+        margin: auto;
+        margin-left: 10px;
+    }
+
+
+
+
+
+    .form-control1 small {
+
+        position: absolute;
+        text-align: left;
+
+        top: 60px;
+        left: 0;
+    }
+
+    .formgroupinput1 {
+
+        display: flex;
+    }
+
+    .form-group1 small {
+        display: flex;
+        color: red;
+
+
+    }
+    #Emailpasserror{
+        color: red;
+
+    }
+    .forgot_password{
+        display: flex;
+    }
+
+    .forgot-password-link {
+        margin-left: 0px;
+        color: #0175f0;
+        text-decoration: none;
+
+
+
+    }
+
+    .forgot-password-link:hover {
+        text-decoration: underline;
+    }
+
+    
+</style>
+
+    <div class="container1">
+        <h2 class="logo me-auto">Login</h2>
+
+        <form id="form"  method="post" action="">
+            {% csrf_token %}
+
+            <div class="form-group1">
+                <div class="formgroupinput1">
+                    <input type="text" id="email" type="email" placeholder="Email Address" name="email" onkeyup="Email()" />
+                    <div class="icon" id="emailicon">
+                        <!-- <i class="success fa-solid fa-circle-check"></i>
+                            <i class="fa-solid fa-circle-exclamation"></i> -->
+                    </div>
+                </div>
+                
+                <small id="emailError"></small>
+            
+            </div>
+
+            
+            <div class="form-group1">
+                <div class="formgroupinput1">
+                    <input type="password" id="password" type="password" placeholder="password" name="password" onkeyup="Password()" />
+                    <div class="icon" id="passicon">
+                        <!-- <i class="success fa-solid fa-circle-check"></i>
+                            <i class="fa-solid fa-circle-exclamation"></i> -->
+                    </div>
+                </div>
+                
+                <small id="passwordError"></small>
+            
+            </div>
+            <div class="forgot_password"> <small><a href="{% url 'forgot_password' %}" class="forgot-password-link">Forgot Password?</a></small> </div>
+
+
+            <button type="submit" class="get-started-btn scrolling" onckick="validateForm()" > Login </button>
+        
+           <div>
+        </br>
+             {% if msg1 %}
+            <small id="Emailpasserror">{{msg1}}</small>
+            {% endif %} 
+        </div>
+      
+           
+        </form>
+    </div>
+
+
+<script>
+   
+
+
+  
+
+    function Email() {
+        const emailError = document.getElementById('emailError');
+        let email = document.getElementById('email').value;
+
+        if (email.length == 0) {
+            emailError.innerHTML = "Email cannot be blank";
+            emailError.style.color = 'red';
+            icon.innerHTML = '';
+
+
+            return false;
+        }
+     
+       
+        emailError.innerHTML = "";
+        emailicon.style.color = 'green';
+        emailicon.innerHTML = '<i class="success fa-solid fa-circle-check"></i>';
+
+
+        return true;
+    }
+
+
+    function Password(){
+        const passwordError= document.getElementById('passwordError');
+        let  password = document.getElementById('password').value;
+        if(password.length == 0){
+            passwordError.innerHTML = "Password cannot be blank";
+            passwordError.style.color = 'red';
+            passicon.innerHTML = '';
+            return false;
+        }
+    } 
+
+
+</script>
+
+
+
+

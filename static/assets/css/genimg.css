@@ -1,0 +1,82 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container1 {
+    text-align: center;
+    padding: 40px;
+    margin-top: 30px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #333;
+}
+
+form1 {
+    margin-top: 20px;
+}
+
+label {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+input1[type="text"] {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.gen_img{
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.gen_img:hover {
+    background-color: #45a049;
+}
+
+img {
+    margin-top: 20px;
+    max-width: 100%;
+    height: auto;
+}
+
+p1 {
+    margin-top: 20px;
+    color: #888;
+}
+.card1 img {
+    margin-top: 20px;
+    max-width: 100%;
+    height: auto;
+    border: 2px solid rgb(204, 199, 199);
+    padding: 10px;
+    box-shadow: 10px 10px rgb(204, 199, 199);
+
+}
+
+.no-image-message1 {
+    margin-top: 20px;
+    color: #888;
+}
+.small_error_img{
+    color: red;
+    
+}

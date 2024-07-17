@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Artistry ChatHub</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+  <link href="/static/assets/img/favicon.png" rel="icon">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+  <link href="/static/assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="/static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/static/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/static/assets/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+
+  <header id="header" class="fixed-top d-flex align-items-center">
+    <div class="container d-flex align-items-center">
+      <h1 class="logo me-auto"><a href="{% url 'home' %}">Artistry ChatHub<span>.</span></a></h1>
+      <nav id="navbar" class="navbar order-last order-lg-0">
+        <ul>
+          <li><a class="nav-link scrollto active" href="{% url 'home' %}">Home</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'about' %}">About-us</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'chatpage' %}">Chat</a></li>
+          <li><a class="nav-link scrollto " href="{% url 'generate_img' %}">Image</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+      {% if user.is_authenticated %}
+      <a href="{% url 'logout-user' %}" class="get-started-btn scrollto">Sign-out</a>
+
+      {% else %}
+      <a href="{% url 'user_login' %}" class="get-started-btn scrollto">Login</a>
+      <a href="{% url 'register' %}" class="get-started-btn scrollto">Sign-up</a>
+      {% endif %}
+      <!-- <a href="{% url 'user_login' %}" class="get-started-btn scrollto">Login </a>
+      <a href=  "{% url 'register' %}" class="get-started-btn scrollto">Sign-up</a> -->
+    </div>
+  </header><!-- End Header -->
+  <section id="hero" class="d-flex align-items-center">
+
+    <div class="container" data-aos="zoom-out" data-aos-delay="100">
+      <div class="row">
+        <div class="col-xl-6">
+          <h1>Bettter digital experience with Artistry ChatHub</h1>
+          <h2>Empowering Your Imagination: Artistry in Every Pixel.</h2>
+          <a href="/" class="btn-get-started scrollto">Get Started</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 col-md-6 footer-contact">
+            <h3>Artistry ChatHub<span>.</span></h3>
+            <p>
+              D-115, Pocket D,<br>
+              Okhla Phase I<br>
+              Delhi 110020<br><br>
+              <strong>Phone:</strong>9983333103<br>
+              <strong>Email:</strong> info@abcgmail.com<br>
+            </p>
+          </div>
+          <div class="col-lg-4 col-md-6 footer-newsletter">
+            <h4>Join Our Group</h4>
+            <p>subscribe and be the first to receive our latest news and updates!</p>
+            <form action="/">
+              <input type="email" name="email"><input type="submit" value="Subscribe">
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="container d-md-flex py-4">
+      <div class="me-md-auto text-center text-md-start">
+        <div class="copyright">
+          &copy; Copyright <strong><span> Delhi 110020</span></strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+          Developed by <a href="/">Mobiloitte</a>
+        </div>
+      </div>
+      <div class="social-links text-center text-md-end pt-3 pt-md-0">
+        <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+        <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+        <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+        <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+        <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/assets/vendor/aos/aos.js"></script>
+  <script src="/static/assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="/static/assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="/static/assets/js/main.js"></script>
+
+</body>
+
+</html>
